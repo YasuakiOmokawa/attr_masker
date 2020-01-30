@@ -6,3 +6,6 @@ gem "mongoid", require: false
 
 gem "codecov", require: false
 gem "simplecov", require: false
+
+gem "database_cleaner_active_record", require: false
+gem "database_cleaner_mongoid", require: false
