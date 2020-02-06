@@ -50,9 +50,16 @@ jobs:
       # For Bundler control variables, refer to:
       # https://bundler.io/v1.17/bundle_config.html
       BUNDLE_GEMFILE: ${{ format('gemfiles/{0}.gemfile', matrix.gemfile) }}
+      CACHE_NAME: ${{ matrix.ruby }}:${{ matrix.gemfile }}:${{ matrix.without }}
 
     steps:
       - uses: actions/checkout@v1
+
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: tests-gems:${{ env.CACHE_NAME }}
 
       - name: Install required software
         run: |
@@ -66,7 +73,9 @@ jobs:
       - name: Install gems
         run: |
           gem install bundler -v 1.17.3
+          bundle config path "${GITHUB_WORKSPACE}/vendor/bundle"
           bundle install --jobs 4 --retry 3
+          bundle clean
 
       - name: Run tests
         run: bundle exec rspec
