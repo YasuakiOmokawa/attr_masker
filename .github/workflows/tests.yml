@@ -76,4 +76,5 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
         env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           WITHOUT: ${{ matrix.without }}
