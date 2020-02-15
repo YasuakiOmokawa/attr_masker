@@ -51,6 +51,11 @@ jobs:
       # https://bundler.io/v1.17/bundle_config.html
       BUNDLE_GEMFILE: ${{ format('gemfiles/{0}.gemfile', matrix.gemfile) }}
 
+      # It is a common practice to differentiate CI builds from other test
+      # runs by setting the following environment variable.  Actual value of
+      # the variable does not matter.
+      CI: "yes"
+
     steps:
       - uses: actions/checkout@v1
 
